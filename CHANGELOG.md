@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+#### 🚀 Updates
+
+- Added a `moon query cache-status` command, which hashes the provided task targets and reports
+  whether each would be a cache hit (`hit`, `miss`, or `uncacheable`) and from where (previous
+  output, local, or remote), without running them. Useful when planning a CI pipeline, as a target
+  that would only be restored from the cache does not need a job of its own.
+
 ## 2.5.5
 
 #### 🚀 Updates

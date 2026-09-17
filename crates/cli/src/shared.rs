@@ -248,6 +248,9 @@ pub async fn run_cli(args: Vec<OsString>) -> MainResult {
                     QueryCommands::Affected(args) => {
                         commands::query::affected::affected(session, args).await
                     }
+                    QueryCommands::CacheStatus(args) => {
+                        commands::query::cache_status::cache_status(session, args).await
+                    }
                     QueryCommands::ChangedFiles(args) => {
                         commands::query::changed_files::changed_files(session, args).await
                     }

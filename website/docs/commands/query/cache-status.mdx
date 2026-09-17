@@ -1,0 +1,56 @@
+---
+title: query cache-status
+sidebar_label: cache-status
+toc_max_heading_level: 6
+---
+
+import VersionLabel from '@site/src/components/Docs/VersionLabel';
+
+<VersionLabel version="2.6.0" header />
+
+Use the `moon query cache-status` sub-command to find out whether task targets would be a cache hit,
+without running them. Each target is hashed exactly as it would be in a real run, and that hash is
+checked against the local and remote caches.
+
+```shell
+$ moon query cache-status app:build app:lint
+```
+
+This will output the following JSON structure:
+
+```ts
+{
+	targets: Record<string, {
+		hash: string,
+		status: 'hit' | 'miss' | 'uncacheable',
+		source?: 'previous-output' | 'local' | 'remote',
+		requested: boolean,
+	}>,
+}
+```
+
+A `hit` means the task would be restored from the cache instead of executed, while `uncacheable`
+means the task has [`options.cache`](../../config/project#cache) disabled and always runs. Because a
+task's hash includes the hashes of its dependencies, the dependencies are hashed too and are part of
+the output, marked with `requested: false`.
+
+This is primarily useful when planning a CI pipeline: a target that would only be restored from the
+cache does not need a job of its own.
+
+:::caution
+
+No task is executed and no outputs are cached, but this is a prediction, not a guarantee. Sync and
+setup actions are skipped, so a task whose inputs are written by a sync action may hash differently
+than it would in a real run. A task's [fingerprint checks](../../config/project#fingerprint) are
+still executed, since their output is part of the hash.
+
+:::
+
+### Arguments
+
+- `...<target>` - [Task targets](../../concepts/target) to check.
+
+### Configuration
+
+- [`remote`](../../config/workspace#remote) in `.moon/workspace.yml`
+- [`tasks.*.options.cache`](../../config/project#cache) in `moon.*`

@@ -2,6 +2,11 @@ tasks:
   base:
     command: 'exit 0'
 
+  notCached:
+    command: 'exit 0'
+    options:
+      cache: false
+
   internalOnly:
     extends: 'base'
     options:

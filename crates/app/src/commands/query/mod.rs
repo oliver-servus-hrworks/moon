@@ -1,4 +1,5 @@
 pub mod affected;
+pub mod cache_status;
 pub mod changed_files;
 pub mod projects;
 pub mod tasks;
@@ -15,6 +16,12 @@ pub enum QueryCommands {
         about = "Query affected status for projects and tasks."
     )]
     Affected(affected::QueryAffectedArgs),
+
+    #[command(
+        name = "cache-status",
+        about = "Query whether task targets would be a cache hit, without running them."
+    )]
+    CacheStatus(cache_status::QueryCacheStatusArgs),
 
     #[command(
         name = "changed-files",
