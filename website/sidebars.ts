@@ -166,6 +166,7 @@ const sidebars: SidebarsConfig = {
 					label: 'query',
 					items: [
 						'commands/query/affected',
+						'commands/query/cache-status',
 						'commands/query/changed-files',
 						'commands/query/projects',
 						'commands/query/tasks',
